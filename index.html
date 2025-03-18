@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abrazo virtual</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            background-color: whitesmoke;
+            font-family: 'Comic Neue', cursive;
+        }
+
+        :root {
+            --loading-width: 160px;
+            --loading-heigth: 23px;
+        }
+
+        body {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f9f9f9;
+            flex-direction: column;
+        }
+
+        main {
+            text-align: center;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        /* Página de introducción */
+        #intro {
+            display: block;
+            text-align: center;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            position: relative;
+        }
+
+        #intro h1 {
+            font-size: 40px;
+            color: #ff5c8e;
+            margin-bottom: 15px;
+        }
+
+        #intro p {
+            font-size: 28px;
+            color: #ff69b4;
+            margin-bottom: 30px;
+        }
+
+        /* Estilo para el nuevo texto con animación de desvanecimiento */
+        #subtitle {
+            font-size: 24px;
+            font-weight: normal;
+            color: rgb(150, 75, 75);
+            margin-bottom: 8px;
+            opacity: 0;  /* Inicialmente invisible */
+            transition: opacity 1.5s ease-in-out; /* Transición suave */
+        }
+
+        /* Estilo para la imagen con animación de desvanecimiento */
+        #me {
+            opacity: 0; /* Inicialmente invisible */
+            transition: opacity 1.5s ease-in-out; /* Transición suave */
+            margin-top: 8px;
+            margin-bottom: 14px;
+        }
+
+        .box {
+            display: inline-block;
+            border: solid black 4px;
+            width: var(--loading-width);
+            background-color: white;
+        }
+
+        .loading-box {
+            height: var(--loading-heigth);
+            width: var(--loading-width);
+            background-color: blueviolet;
+            animation: loading 5s;
+        }
+
+        #state-message {
+            font-size: larger;
+            font-weight: bold;
+            color: rgb(109, 109, 109);
+        }
+
+        @keyframes loading {
+            0% {
+                width: 0;
+            }
+
+            100% {
+                width: var(--loading-width);
+            }
+        }
+
+        #title,
+        #result {
+            margin-top: 8px;
+            margin-bottom: 10px;
+        }
+
+        .box {
+            margin-top: 3px;
+        }
+
+        /* Estilo para el botón, lo hacemos más grande */
+        #moveButton {
+            font-size: 30px; /* Texto más grande */
+            padding: 20px 40px; /* Más padding para hacerlo más "gordo" */
+            background-color: #ff5c8e;
+            color: white;
+            border: none;
+            border-radius: 10px; /* Bordes más redondeados */
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            position: fixed;
+            bottom: 30px; /* Posicionamos el botón 30px desde la parte inferior */
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+        }
+
+        #moveButton:hover {
+            background-color: #ff4b79;
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <!-- Página de introducción -->
+        <div id="intro">
+            <!-- Imagen de gato sorpresa arriba del texto -->
+            <img src="Gato sorpresa.jpg" alt="Gato Sorpresa" style="width: 200px; margin-bottom: 20px;">
+            <div class="message-bubble">
+                <h1>Hey Melanie!!!</h1>
+                <p>Ander tiene una sorpresa para ti c:</p>
+            </div>
+        </div>
+
+        <!-- Botón fuera del cuadro del mensaje -->
+        <button id="moveButton" onclick="handleButtonClick()">Ver</button>
+
+        <!-- Contenido actual que se mostrará después -->
+        <div id="content" style="display: none;">
+            <h1 id="title">Entrega de florecitas para ti c:</h1>
+            <h3 id="subtitle">Para la niña más linda que conozco ❤️</h3> <!-- Aparece lentamente -->
+            <div>
+                <img id="me" src="Dibujo animado con flores.png" alt="">
+            </div>
+            <div class="box">
+                <div class="loading-box"></div>
+            </div>
+            <h3 id="state-message">cargando...</h3>
+            <h2 id="result">&nbsp;</h2>
+        </div>
+
+        <!-- Audio que se reproduce al presionar "Ver" -->
+        <audio id="audio" src="Floricienta  Flores Amarillas [Letra].mp3" preload="auto"></audio>
+
+        <script>
+            // Función para mostrar el contenido y reproducir el audio
+            function handleButtonClick() {
+                // Ocultar el botón "Ver"
+                document.getElementById('moveButton').style.display = 'none';
+
+                // Mostrar el contenido después de ocultar el botón
+                document.getElementById('intro').style.display = 'none';
+                document.getElementById('content').style.display = 'block';
+
+                // Reproducimos el audio
+                document.getElementById('audio').play();
+
+                // Iniciamos la animación
+                setTimeout(function () {
+                    const message = document.getElementById('result');
+                    message.innerHTML = "Te envio estas flores!";
+
+                    // Hacemos que el mensaje y la imagen aparezcan lentamente
+                    document.getElementById('subtitle').style.opacity = '1';
+                    document.getElementById('me').style.opacity = '1'; // Imagen aparece lentamente
+                }, 6200);
+
+                setTimeout(function () {
+                    const message = document.getElementById('state-message');
+                    message.innerHTML = "&nbsp;";
+                }, 6000);
+            }
+        </script>
+    </main>
+</body>
+
+</html>
